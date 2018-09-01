@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".Controller.MyProfileActivity"
+    tools:showIn="@layout/activity_my_profile">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:padding="20sp"
+        android:background="@drawable/profile_circular_border_imageview"
+        app:srcCompat="@drawable/my_profile"
+        android:layout_gravity="center" />
+
+    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_margin="10dp">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="left"
+            android:padding="10dp"
+            android:background="@drawable/bar"
+
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:padding="2dp"
+                android:text="PSR Name"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:padding="2dp"
+                android:text=":"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/psrname"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:padding="2dp"
+                android:text=""
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="left"
+            android:padding="10dp"
+            android:background="@drawable/bar"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:padding="2dp"
+                android:text="DB House Name"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:padding="2dp"
+                android:text=":"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/dbname"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:padding="2dp"
+                android:text="23456"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="left"
+            android:padding="10dp"
+            android:background="@drawable/bar"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:padding="2dp"
+                android:text="PSR code"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:padding="2dp"
+                android:text=":"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/psrcode"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:padding="2dp"
+                android:text="23456"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="left"
+            android:padding="10dp"
+            android:background="@drawable/bar"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:padding="2dp"
+                android:text="Mobile No"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:padding="2dp"
+                android:text=":"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/mobile"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:padding="2dp"
+                android:text="23456"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="left"
+            android:padding="10dp"
+            android:background="@drawable/bar"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:padding="2dp"
+                android:text="Version Name"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:padding="2dp"
+                android:text=":"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/versionName"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:padding="2dp"
+                android:text="23456"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+        </TableRow>
+
+
+    </TableLayout>
+
+
+</LinearLayout>
