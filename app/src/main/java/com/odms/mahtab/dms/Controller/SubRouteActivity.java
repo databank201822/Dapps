@@ -103,6 +103,11 @@ public class SubRouteActivity extends AppCompatActivity {
 
                 Log.e("msg_id","msg_id :"+subrouteid);
 
+                Intent I = new Intent(SubRouteActivity.this, OrderListActivity.class);
+                I.putExtra("subrouteid",subrouteid);
+
+                startActivity(I);
+
                 Toast.makeText(getApplicationContext()," "+subrouteid,Toast.LENGTH_SHORT).show();
 
             }

@@ -10,9 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.odms.mahtab.dms.Model.M_OrderOutlet;
+import com.odms.mahtab.dms.Model.M_Outlet;
 import com.odms.mahtab.dms.R;
 
 
@@ -24,24 +23,24 @@ import java.util.Locale;
  * Created by Mahtab on 08-Feb-2018.
  */
 
-public class OrderOutletListAdapter extends ArrayAdapter<M_OrderOutlet> {
+public class OrderOutletListAdapter extends ArrayAdapter<M_Outlet> {
 
-    List<M_OrderOutlet> outletList;
+    List<M_Outlet> outletList;
 
     //activity context
     Context context;
 
     //the layout resource file for the list items
     int resource;
-    private ArrayList<M_OrderOutlet> arraylist;
+    private ArrayList<M_Outlet> arraylist;
 
-    public OrderOutletListAdapter(Context Context, int resource, List<M_OrderOutlet> outletList) {
+    public OrderOutletListAdapter(Context Context, int resource, List<M_Outlet> outletList) {
         super(Context, resource, outletList);
         this.context = Context;
         this.resource = resource;
         this.outletList = outletList;
 
-        this.arraylist = new ArrayList<M_OrderOutlet>();
+        this.arraylist = new ArrayList<M_Outlet>();
         this.arraylist.addAll(outletList);
     }
 
@@ -59,7 +58,7 @@ public class OrderOutletListAdapter extends ArrayAdapter<M_OrderOutlet> {
 
     //get Object from each position
     @Override
-    public M_OrderOutlet getItem(int position) {
+    public M_Outlet getItem(int position) {
         return outletList.get(position);
     }
 
@@ -80,21 +79,14 @@ public class OrderOutletListAdapter extends ArrayAdapter<M_OrderOutlet> {
         LinearLayout ListItemLayout = view.findViewById(R.id.ListItemLayout);
 
 
-        M_OrderOutlet message = outletList.get(position);
+        M_Outlet message = outletList.get(position);
 
-        if (message.get_orderStatus() == 0) {
 
-        } else if (message.get_orderStatus() == 1) {
-            // ListItemLayout.setBackgroundColor(R.color.colorPrimary);
-            tvOrderCS.setText(message.get_orderCS() + " CS");
-        } else if (message.get_orderStatus() == 2) {
-            // ListItemLayout.setBackgroundColor(R.color.colorPrimary);
-        }
 
-        tvOutlet.setText(message.get_outletName());
-        tvCode.setText(String.valueOf(message.get_outletCode()));
+        tvOutlet.setText(message.getOutletName());
+        tvCode.setText(String.valueOf(message.getOutletCode()));
 
-        //   tvStatus.setText(String.valueOf(message.get_orderStatus()));
+
 
         return view;
     }
@@ -107,10 +99,10 @@ public class OrderOutletListAdapter extends ArrayAdapter<M_OrderOutlet> {
         if (charText.length() == 0) {
             outletList.addAll(arraylist);
         } else {
-            for (M_OrderOutlet wp : arraylist) {
-                if (wp.get_outletName().toLowerCase(Locale.getDefault()).contains(charText)) {
+            for (M_Outlet wp : arraylist) {
+                if (wp.getOutletName().toLowerCase(Locale.getDefault()).contains(charText)) {
                     outletList.add(wp);
-                }else if(String.valueOf(wp.get_outletCode()).contains(charText)) {
+                }else if(String.valueOf(wp.getOutletCode()).contains(charText)) {
                     outletList.add(wp);
 
                 }

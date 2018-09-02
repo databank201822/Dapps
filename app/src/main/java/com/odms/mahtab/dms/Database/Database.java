@@ -7,7 +7,7 @@ import android.util.Log;
 
 public class Database extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 2;                     //DATABASE_VERSION
+    private static final int DATABASE_VERSION = 3;                     //DATABASE_VERSION
     private static final String DATABASE_NAME = "ODMS";  //DATABASE_NAME
     Context Contex;
 
@@ -23,7 +23,7 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL(tbld_subroute);
         Log.e("tbld_subroute", tbld_subroute);
 
-        String tbld_outlet = "CREATE TABLE tbld_outlet (id INTEGER PRIMARY KEY,outletId INTEGER,outletCode INTEGER,outletName TEXT,routeId INTEGER ,orderCS TEXT,orderStatus INTEGER)";
+        String tbld_outlet = "CREATE TABLE tbld_outlet (id INTEGER PRIMARY KEY ,OutletId INTEGER,PSR_id INTEGER,RouteID INTEGER,OutletCode INTEGER,OutletName TEXT,OwnerName TEXT,ContactNo TEXT,Address TEXT,Distributorid INTEGER,HaveVisicooler INTEGER,IsActive INTEGER,channel_name TEXT,outlet_category_name TEXT,Outlet_grade TEXT)";
         Log.e("tbl_order_outlet", tbld_outlet);
         db.execSQL(tbld_outlet);
     }

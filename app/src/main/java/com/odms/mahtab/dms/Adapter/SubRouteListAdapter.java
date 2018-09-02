@@ -12,13 +12,10 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.odms.mahtab.dms.Model.M_OrderOutlet;
 import com.odms.mahtab.dms.Model.M_SubRoute;
 import com.odms.mahtab.dms.R;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Created by Mahtab on 08-Feb-2018.

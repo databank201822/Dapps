@@ -1,5 +1,4 @@
 package com.odms.mahtab.dms.Controller;
-
 import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,145 +14,130 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.odms.mahtab.dms.Adapter.OrderOutletListAdapter;
+import com.odms.mahtab.dms.Database.LocalQuery.tbld_outlet_Local;
 import com.odms.mahtab.dms.MainActivity;
-import com.odms.mahtab.dms.Model.M_OrderOutlet;
+import com.odms.mahtab.dms.Model.M_Outlet;
 import com.odms.mahtab.dms.R;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+  public class OrderListActivity extends AppCompatActivity {
 
-import com.odms.mahtab.dms.Database.LocalQuery.order_outlet_local;
+        ListView listView;
+        List<M_Outlet> outletArrayList=new ArrayList<>();
+int subrouteid;
+        // Search EditText
+        EditText inputSearch;
+        OrderOutletListAdapter adapter;
 
-public class OrderListActivity extends AppCompatActivity {
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_order_list);
+            subrouteid = getIntent().getIntExtra("subrouteid",0);
 
-    ListView listView;
-    List<M_OrderOutlet> outletArrayList=new ArrayList<>();
+            getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+            getSupportActionBar().setDisplayShowCustomEnabled(true);
+            getSupportActionBar().setCustomView(R.layout.custom_action_bar_layout);
+            View view =getSupportActionBar().getCustomView();
+            TextView tvOutlet = view.findViewById(R.id.actionbar);
+            tvOutlet.setText("Order Outlet List");
 
-    // Search EditText
-    EditText inputSearch;
-    OrderOutletListAdapter adapter;
+            ImageButton btnBack= (ImageButton)view.findViewById(R.id.action_back_btn);
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_order_list);
+            btnBack.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
 
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setCustomView(R.layout.custom_action_bar_layout);
-        View view =getSupportActionBar().getCustomView();
-        TextView tvOutlet = view.findViewById(R.id.actionbar);
-        tvOutlet.setText("Order Outlet List");
+            ImageButton btnHome= (ImageButton)view.findViewById(R.id.action_home_btn);
 
-        ImageButton btnBack= (ImageButton)view.findViewById(R.id.action_back_btn);
-
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
-        ImageButton btnHome= (ImageButton)view.findViewById(R.id.action_home_btn);
-
-        btnHome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent I = new Intent(OrderListActivity.this, MainActivity.class);
-                startActivity(I);
-                finish();
-            }
-        });
+            btnHome.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent I = new Intent(OrderListActivity.this, MainActivity.class);
+                    startActivity(I);
+                    finish();
+                }
+            });
 
 
-        inputSearch = (EditText) findViewById(R.id.inputSearch);
-        inputSearch.setSelected(false);
-
-        order_outlet_local order_outlet_local = new order_outlet_local(getApplicationContext());
-        order_outlet_Server order_outlet_Server = new order_outlet_Server(getApplicationContext());
-
-        listView = (ListView) findViewById(R.id.outlet_list_view);
-       // getAllMsg();
-
-        ListViewShow();
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+            inputSearch = (EditText) findViewById(R.id.inputSearch);
+            inputSearch.setSelected(false);
 
 
-               Intent I = new Intent(OrderListActivity.this, OrderActivity.class);
-               startActivity(I);
+
+            listView = (ListView) findViewById(R.id.outlet_list_view);
 
 
-            }
-        });
+            ListViewShow();
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
 
 
-        inputSearch.addTextChangedListener(new TextWatcher() {
-
-            @Override
-            public void afterTextChanged(Editable arg0) {
-                // TODO Auto-generated method stub
-                String text = inputSearch.getText().toString().toLowerCase(Locale.getDefault());
-                adapter.filter(text);
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence arg0, int arg1,int arg2, int arg3) {
-                // TODO Auto-generated method stub
-            }
-
-            @Override
-            public void onTextChanged(CharSequence arg0, int arg1, int arg2,
-                                      int arg3) {
-                // TODO Auto-generated method stub
-            }
-        });
+                    Intent I = new Intent(OrderListActivity.this, OrderActivity.class);
+                    startActivity(I);
 
 
-    }
+                }
+            });
 
 
-    void insertOrderOutlet( int outletId, int outletCode,  String outletName,int routeId, String orderCS,int orderStatus){
-        order_outlet_Server DBin = new order_outlet_Server(getApplicationContext());
-        DBin.insertOrderOutlet(new M_OrderOutlet(outletId,outletCode,outletName,routeId,orderCS,orderStatus));
-    }
+            inputSearch.addTextChangedListener(new TextWatcher() {
 
-    public void getAllMsg(){
-        for(int i=1;i<50;i++) {
-            if(i%4>1) {
-                insertOrderOutlet(i,30000+i,"Outlet"+i,1,"3.40",1);
-            }else{
-                insertOrderOutlet(i,30000+i,"Outlet"+i,1,"3.40",0);
-            }
+                @Override
+                public void afterTextChanged(Editable arg0) {
+                    // TODO Auto-generated method stub
+                    String text = inputSearch.getText().toString().toLowerCase(Locale.getDefault());
+                    adapter.filter(text);
+                }
+
+                @Override
+                public void beforeTextChanged(CharSequence arg0, int arg1,int arg2, int arg3) {
+                    // TODO Auto-generated method stub
+                }
+
+                @Override
+                public void onTextChanged(CharSequence arg0, int arg1, int arg2,
+                                          int arg3) {
+                    // TODO Auto-generated method stub
+                }
+            });
+
 
         }
 
-    }
-    void ListViewShow(){
 
-        outletArrayList=new ArrayList<>();
-        order_outlet_local order_outlet_local = new order_outlet_local(getApplicationContext());
-        List<M_OrderOutlet> Conts = order_outlet_local.getalloutlet();
+        void ListViewShow(){
 
-        for (M_OrderOutlet Cont : Conts) {
-            outletArrayList.add(new M_OrderOutlet(Cont.get_id(),Cont.get_outletId(),Cont.get_outletCode(),Cont.get_outletName(),Cont.get_routeId(),Cont.get_orderCS(),Cont.get_orderStatus()));
-            Log.e("getAllMsg","Message function"+Cont.get_orderStatus());
+            outletArrayList=new ArrayList<>();
+            tbld_outlet_Local order_outlet_local = new tbld_outlet_Local(getApplicationContext());
+            List<M_Outlet> Conts = order_outlet_local.getAllOutletlistbyroute(subrouteid);
+
+            for (M_Outlet Cont : Conts) {
+                outletArrayList.add(new M_Outlet(Cont.getOutletId(),Cont.getOutletCode(),Cont.getOutletName()));
+                Log.e("getAllMsg","Message function"+Cont.getOutletName());
+            }
+
+            adapter = new OrderOutletListAdapter(this, R.layout.order_outlet_listview_row, outletArrayList);
+            listView.setAdapter(adapter);
+
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+
+
+
+                }
+            });
         }
 
-        adapter = new OrderOutletListAdapter(this, R.layout.order_outlet_listview_row, outletArrayList);
-        listView.setAdapter(adapter);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
 
 
-
-            }
-        });
-    }
 
 
 }
