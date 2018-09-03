@@ -1,11 +1,11 @@
 package com.odms.mahtab.dms.Controller;
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -16,47 +16,45 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.odms.mahtab.dms.Adapter.OrderOutletListAdapter;
-import com.odms.mahtab.dms.Adapter.OrderSkuListAdapter;
 import com.odms.mahtab.dms.Database.LocalQuery.Order_list_Local;
-import com.odms.mahtab.dms.Database.LocalQuery.tbld_Sku_Local;
 import com.odms.mahtab.dms.Database.LocalQuery.tbld_outlet_Local;
+import com.odms.mahtab.dms.MainActivity;
 import com.odms.mahtab.dms.Model.M_Outlet;
-import com.odms.mahtab.dms.Model.M_SKU;
 import com.odms.mahtab.dms.R;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class OrderSkuListActivity extends AppCompatActivity {
-
-
+public class OutletListOutletActivity extends AppCompatActivity {
 
     ListView listView;
-    List<M_SKU> skuArrayList = new ArrayList<>();
-    int subrouteid, Todayvisit;
-
+    List<M_Outlet> outletArrayList = new ArrayList<>();
+    int subrouteid;
 
     // Search EditText
     EditText inputSearch;
-    OrderSkuListAdapter adapter;
+    OrderOutletListAdapter adapter;
     //Kpi
 
-    TextView SC, Memo, NotOrder, Pending, Ordercs, TLSD, LPSC, Drop;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_order_sku_list);
+        setContentView(R.layout.activity_order_list_outlet);
+
+        subrouteid = getIntent().getIntExtra("subrouteid", 0);
+
 
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setCustomView(R.layout.custom_action_bar_layout);
-        View view =getSupportActionBar().getCustomView();
+        View view = getSupportActionBar().getCustomView();
         TextView tvOutlet = view.findViewById(R.id.actionbar);
-        tvOutlet.setText("Order Sku List");
+        tvOutlet.setText("Order Outlet List");
 
-        ImageButton btnBack= (ImageButton)view.findViewById(R.id.action_back_btn);
+        ImageButton btnBack = (ImageButton) view.findViewById(R.id.action_back_btn);
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,15 +63,23 @@ public class OrderSkuListActivity extends AppCompatActivity {
             }
         });
 
-        ImageButton homeBack= (ImageButton)view.findViewById(R.id.action_home_btn);
-        homeBack.setVisibility(View.GONE);
+        ImageButton btnHome = (ImageButton) view.findViewById(R.id.action_home_btn);
 
-        Log.e("sku", "SKU LIST");
+        btnHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent I = new Intent(OutletListOutletActivity.this, MainActivity.class);
+                startActivity(I);
+                finish();
+            }
+        });
+
+
         inputSearch = (EditText) findViewById(R.id.inputSearch);
         inputSearch.setSelected(false);
 
 
-        listView = (ListView) findViewById(R.id.list_view);
+        listView = (ListView) findViewById(R.id.outlet_list_view);
         ListViewShow();
 
 
@@ -102,35 +108,41 @@ public class OrderSkuListActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onResume() {
+
+        Toast.makeText(this, "Activity Resume", Toast.LENGTH_LONG).show();
+        super.onResume();
+
+
+    }
 
 
 
     void ListViewShow() {
 
-        skuArrayList = new ArrayList<>();
-        tbld_Sku_Local sku_local = new tbld_Sku_Local(getApplicationContext());
+        outletArrayList = new ArrayList<>();
+        tbld_outlet_Local order_outlet_local = new tbld_outlet_Local(getApplicationContext());
+        List<M_Outlet> Conts = order_outlet_local.getAllOutletlistbyroute(subrouteid);
 
-        List<M_SKU> Conts = sku_local.getAllSkulist();
-
-        for (M_SKU Cont : Conts) {
-            skuArrayList.add(new M_SKU(Cont.getId(),Cont.getSKUId(),Cont.getPackSize(),Cont.getTP(), Cont.getSKUName(), Cont.getPromo_name()));
-              Log.e("sku","sku function"+Cont.getSKUName());
+        for (M_Outlet Cont : Conts) {
+            outletArrayList.add(new M_Outlet(Cont.getOutletId(), Cont.getOutletCode(), Cont.getOutletName()));
+            //   Log.e("getAllMsg","Message function"+Cont.getOutletName());
         }
 
-        adapter = new OrderSkuListAdapter(this, R.layout.order_sku_listview_row, skuArrayList);
+        adapter = new OrderOutletListAdapter(this, R.layout.order_outlet_listview_row, outletArrayList);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                M_SKU data=skuArrayList.get(position);
 
-                Toast.makeText(getApplicationContext(),"SKU Id",Toast.LENGTH_SHORT).show();
             }
         });
 
     }
 
 
-
 }
+
+

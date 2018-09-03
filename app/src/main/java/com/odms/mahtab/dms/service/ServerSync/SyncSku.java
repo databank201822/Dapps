@@ -11,39 +11,39 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.odms.mahtab.dms.Database.ServerQuery.tbld_outlet_server;
+import com.odms.mahtab.dms.Database.ServerQuery.tbld_sku_server;
 import com.odms.mahtab.dms.Model.GlobalClass;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class SyncOutlet {
+public class SyncSku {
 
     Context myContext;
     GlobalClass GC = new GlobalClass().getInstance();
-    int psrid = GC.getPSRid();
-    String url = GC.getSERVER_URL() + "OutletApi/GetOutlet/"+psrid;//Get Outlet
+    int getDBId = GC.getDBId();
+    String url = GC.getSERVER_URL() + "SkuApi/GetSku/"+getDBId;//Get SKU
 
 
-    public SyncOutlet(Context Context) {
+    public SyncSku(Context Context) {
         myContext = Context;
-        SyncServerOutletData();
+        SyncServerSkuData();
     }
 
 
-    public void SyncServerOutletData() {
+    public void SyncServerSkuData() {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
-                        tbld_outlet_server tbld_outlet_server=new tbld_outlet_server(myContext);
-                        tbld_outlet_server.OutletServerResponse(response.toString());
+                        tbld_sku_server tbld_sku_server=new tbld_sku_server(myContext);
+                        tbld_sku_server.SKUServerResponse(response.toString());
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("Error_Outlet Not sync", error.toString());
-                SyncServerOutletData();
+                Log.e("Error_SKUNotsync", error.toString());
+                SyncServerSkuData();
             }
         }) {
             //adding parameters to the request

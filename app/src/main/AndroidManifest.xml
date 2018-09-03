@@ -45,7 +45,7 @@
         <activity
             android:name=".Controller.OrderListActivity"
             android:label="@string/outlet_list"
-            android:parentActivityName=".Controller.SubRouteActivity"
+            android:parentActivityName=".MainActivity"
             android:theme="@style/CustomTheme"
             android:windowSoftInputMode="stateHidden">
             <meta-data
@@ -80,6 +80,24 @@
             android:label="@string/title_activity_my_profile"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.odms.mahtab.dms.MainActivity" />
+        </activity>
+        <activity
+            android:name=".Controller.OutletListSubrouteActivity"
+            android:label="@string/title_sub_route"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/CustomTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.odms.mahtab.dms.MainActivity" />
+        </activity>
+        <activity
+            android:name=".Controller.OutletListOutletActivity"
+            android:label="@string/title_sub_route"
+            android:parentActivityName=".Controller.OutletListSubrouteActivity"
+            android:theme="@style/CustomTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.odms.mahtab.dms.MainActivity" />

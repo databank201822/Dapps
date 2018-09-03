@@ -24,7 +24,7 @@ public class tbld_subroute_Local {
 
     }//select DB
 
-    public List<M_SubRoute> getAllSubRoutelist(int Todayvisit) {
+    public List<M_SubRoute> getAllSubRoutelistbyid(int Todayvisit) {
 
         List<M_SubRoute> AllSubRoutelist = new ArrayList<>();
 
@@ -50,6 +50,35 @@ public class tbld_subroute_Local {
         return AllSubRoutelist;
 
     }
+
+    public List<M_SubRoute> getAllSubRoutelist() {
+
+        List<M_SubRoute> AllSubRoutelist = new ArrayList<>();
+
+        String selectQuery = "SELECT * FROM tbld_subroute ";
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                M_SubRoute SubRoute = new M_SubRoute();
+                SubRoute.set_Id(Integer.parseInt(cursor.getString(0)));
+                SubRoute.set_Psrid(Integer.parseInt(cursor.getString(1)));
+                SubRoute.set_Subrouteid(Integer.parseInt(cursor.getString(2)));
+                SubRoute.set_SubrouteName(cursor.getString(3));
+                SubRoute.set_Todayvisit(Integer.parseInt(cursor.getString(4)));
+
+
+                // Adding contact to list
+                AllSubRoutelist.add(SubRoute);
+            } while (cursor.moveToNext());
+        }
+        db.close();
+        return AllSubRoutelist;
+
+    }
+
+
 
 
 }

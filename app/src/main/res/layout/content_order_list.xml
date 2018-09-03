@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.odms.mahtab.dms.Controller.OrderListActivity"
+    tools:context=".Controller.OrderListActivity"
     tools:showIn="@layout/activity_order_list">
 
     <LinearLayout
@@ -14,8 +14,9 @@
         android:orientation="vertical">
 
         <HorizontalScrollView
+            android:id="@+id/KPI"
             android:layout_width="match_parent"
-
+            android:visibility="invisible"
             android:layout_height="wrap_content">
 
             <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -25,6 +26,7 @@
                 android:layout_marginLeft="7dp"
                 android:layout_marginRight="7dp"
                 android:layout_marginTop="30dp">
+
 
                 <TableRow
                     android:layout_width="match_parent"
@@ -60,7 +62,14 @@
                         android:padding="7dp"
                         android:text="Not Order"
                         android:textSize="@dimen/body_text_size" />
-
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="5"
+                        android:background="@drawable/table"
+                        android:padding="7dp"
+                        android:text="Pending"
+                        android:textSize="@dimen/body_text_size" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -70,14 +79,7 @@
                         android:text="Order[CS]"
                         android:textSize="@dimen/body_text_size" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="5"
-                        android:background="@drawable/table"
-                        android:padding="7dp"
-                        android:text="Pending"
-                        android:textSize="@dimen/body_text_size" />
+
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -123,6 +125,7 @@
                         android:background="@drawable/table"
                         android:padding="7dp"
                         android:text="SC"
+                        android:id="@+id/SC"
 
                         android:textSize="@dimen/body_text_size" />
 
@@ -133,6 +136,7 @@
                         android:background="@drawable/table"
                         android:padding="7dp"
                         android:text="Memo"
+                        android:id="@+id/Memo"
                         android:textSize="@dimen/body_text_size" />
 
                     <TextView
@@ -142,17 +146,8 @@
                         android:background="@drawable/table"
                         android:padding="7dp"
                         android:text="Not Order"
+                        android:id="@+id/NotOrder"
                         android:textSize="@dimen/body_text_size" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="4"
-                        android:background="@drawable/table"
-                        android:padding="7dp"
-                        android:text="Order[CS]"
-                        android:textSize="@dimen/body_text_size" />
-
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -160,7 +155,19 @@
                         android:background="@drawable/table"
                         android:padding="7dp"
                         android:text="Pending"
+                        android:id="@+id/Pending"
                         android:textSize="@dimen/body_text_size" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="4"
+                        android:background="@drawable/table"
+                        android:padding="7dp"
+                        android:text="Order[CS]"
+                        android:id="@+id/Ordercs"
+                        android:textSize="@dimen/body_text_size" />
+
+
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -169,6 +176,7 @@
                         android:background="@drawable/table"
                         android:padding="7dp"
                         android:text="TLSD"
+                        android:id="@+id/TLSD"
                         android:textSize="@dimen/body_text_size" />
 
                     <TextView
@@ -178,6 +186,7 @@
                         android:background="@drawable/table"
                         android:padding="7dp"
                         android:text="LPSC"
+                        android:id="@+id/LPSC"
                         android:textSize="@dimen/body_text_size" />
 
                     <TextView
@@ -187,27 +196,26 @@
                         android:background="@drawable/table"
                         android:padding="7dp"
                         android:text="Drop"
+                        android:id="@+id/Drop"
                         android:textSize="@dimen/body_text_size" />
                 </TableRow>
 
 
             </TableLayout>
         </HorizontalScrollView>
-
-
-        <!-- Editext for Search -->
+<!-- Editext for Search -->
         <EditText
             android:id="@+id/inputSearch"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/edittext_hint"
             android:focusableInTouchMode="true"
-             />
+            android:hint="@string/edittext_hint" />
 
         <!-- List View -->
         <ListView
             android:id="@+id/outlet_list_view"
-            android:layout_width="fill_parent"            android:layout_height="wrap_content" />
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

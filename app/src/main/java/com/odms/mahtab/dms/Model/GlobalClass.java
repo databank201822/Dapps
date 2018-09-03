@@ -9,7 +9,8 @@ public class GlobalClass extends Application {
     private String Emp_code,PSRName,MobileNo,DBName;
 
 
-    private static final String SERVER_LOCATION = "http://192.168.0.106/";
+  // private static final String SERVER_LOCATION = "http://192.168.0.106/";
+    private static final String SERVER_LOCATION = "http://10.168.13.54/";
     private static final String SERVER_URL = SERVER_LOCATION+"api/";
     private static final String SERVER_IMAGE_LOCATION = SERVER_LOCATION+"Upload/";
 

@@ -4,7 +4,9 @@ import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -22,7 +24,9 @@ import com.odms.mahtab.dms.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SubRouteActivity extends AppCompatActivity {
+public class OutletListSubrouteActivity extends AppCompatActivity {
+
+
 
     ListView listView;
     List<M_SubRoute> outletArrayList=new ArrayList<>();
@@ -30,12 +34,10 @@ public class SubRouteActivity extends AppCompatActivity {
     // Search EditText
     EditText inputSearch;
     SubRouteListAdapter adapter;
-
-    int Todayvisit=1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sub_route);
+        setContentView(R.layout.activity_outlet_list_subroute);
 
 
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
@@ -43,7 +45,7 @@ public class SubRouteActivity extends AppCompatActivity {
         getSupportActionBar().setCustomView(R.layout.custom_action_bar_layout);
         View view =getSupportActionBar().getCustomView();
 
-        Todayvisit = getIntent().getIntExtra("Todayvisit",1);
+
 
         TextView tvRoute = view.findViewById(R.id.actionbar);
         tvRoute.setText("Sub Route");
@@ -62,12 +64,11 @@ public class SubRouteActivity extends AppCompatActivity {
         btnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent I = new Intent(SubRouteActivity.this, MainActivity.class);
+                Intent I = new Intent(OutletListSubrouteActivity.this, MainActivity.class);
                 startActivity(I);
                 finish();
             }
         });
-
 
 
 
@@ -80,12 +81,21 @@ public class SubRouteActivity extends AppCompatActivity {
 
     }
 
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
     void ListViewShow(){
 
         outletArrayList=new ArrayList<>();
         tbld_subroute_Local db = new tbld_subroute_Local(getApplicationContext());
-        final List<M_SubRoute> SubRoutelist = db.getAllSubRoutelistbyid(Todayvisit);
+        final List<M_SubRoute> SubRoutelist = db.getAllSubRoutelist();
 
 
 
@@ -97,24 +107,20 @@ public class SubRouteActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
 
 
+
                 M_SubRoute data=SubRoutelist.get(position);
 
                 int subrouteid=data.get_Subrouteid();
 
                 Log.e("msg_id","msg_id :"+subrouteid);
 
-                Intent I = new Intent(SubRouteActivity.this, OrderListActivity.class);
+                Intent I = new Intent(OutletListSubrouteActivity.this, OutletListOutletActivity.class);
                 I.putExtra("subrouteid",subrouteid);
-                I.putExtra("todayvisit",Todayvisit);
                 startActivity(I);
 
-                Toast.makeText(getApplicationContext()," "+subrouteid,Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"Outlet List",Toast.LENGTH_SHORT).show();
 
             }
         });
     }
-
-
 }
-
-

@@ -48,8 +48,6 @@ public class tbld_outlet_server {
 
                 JSONObject Outlet = storesArray.getJSONObject(i);
 
-                Log.e("Outlet", " Outlet :" + Outlet.getString("OutletName"));
-
 
                 insertOutlet(new M_Outlet(Integer.parseInt(Outlet.getString("OutletId")),
                         Integer.parseInt(Outlet.getString("PSR_id")),
@@ -95,7 +93,7 @@ public class tbld_outlet_server {
         values.put("Outlet_grade", outlet.getOutlet_grade()); //
 
         db.insert("tbld_outlet", null, values);
-        Log.e("InsertInto_tbld_outlet", "" + values.toString());
+       // Log.e("InsertInto_tbld_outlet", "" + values.toString());
 
     }
 

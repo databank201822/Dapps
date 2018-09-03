@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.odms.mahtab.dms.Controller.MyProfileActivity;
 import com.odms.mahtab.dms.Controller.OtherActivity;
+import com.odms.mahtab.dms.Controller.OutletListSubrouteActivity;
 import com.odms.mahtab.dms.Controller.SubRouteActivity;
 import com.odms.mahtab.dms.Model.GlobalClass;
 import com.odms.mahtab.dms.R;
@@ -67,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
                         break;
 
                     case 2:
+                        I = new Intent(MainActivity.this, OutletListSubrouteActivity.class);
+                        startActivity(I);
                         Toast.makeText(MainActivity.this, "Outlet List", Toast.LENGTH_SHORT).show();
                         break;
                     case 3:

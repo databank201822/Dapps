@@ -208,9 +208,10 @@ if(user.getText()!=null ||pass.getText()!=null) {
     public void redirecttoHomepage() {
         ServerDataSync ServerDataSync =new ServerDataSync(getApplicationContext());
 
-        progressDialog.dismiss();
+
         Intent I = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(I);
+        progressDialog.dismiss();
         finish();
     }
 

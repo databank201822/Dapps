@@ -69,7 +69,7 @@ public class tbld_subroute_server {
         values.put("SubrouteName", Subroute.get_SubrouteName()); //
         values.put("Todayvisit",Subroute.get_Todayvisit()); //
         db.insert("tbld_subroute", null, values);
-        Log.e("InsertIntotbld_outlet",""+values.toString());
+        //Log.e("InsertIntotbld_outlet",""+values.toString());
 
     }
 
