@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 android:id="@+id/ListItemLayout"
-    android:background="#fff"
+    android:background="#34d3"
 android:layout_width="match_parent"
 android:layout_height="wrap_content">
 
@@ -15,14 +15,17 @@ android:layout_height="wrap_content">
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textStyle="bold"
-        android:textColor="#000"
-        android:textSize="16dp"
+        android:textColor="#8B0000"
+        android:textSize="18dp"
         android:text="tvSkuname" />
     <TextView
         android:id="@+id/tvPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
+        android:textStyle="bold"
+        android:textColor="#000"
+        android:textSize="16dp"
         android:text="Price" />
     <TextView
         android:id="@+id/tvPromo"

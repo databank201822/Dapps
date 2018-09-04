@@ -107,7 +107,7 @@ if(user.getText()!=null ||pass.getText()!=null) {
     UserCheck(user.getText().toString(), pass.getText().toString(), lat, lon, getIMEINumber());
 }else{
     progressDialog.dismiss();
-    AlertDialogMassage("Please Enter User & Passwordd");
+    AlertDialogMassage("Please Enter User & Passwor");
 }
         } else {
             progressDialog.dismiss();
@@ -207,24 +207,25 @@ if(user.getText()!=null ||pass.getText()!=null) {
 
     public void redirecttoHomepage() {
         ServerDataSync ServerDataSync =new ServerDataSync(getApplicationContext());
-
-
-        Intent I = new Intent(LoginActivity.this, MainActivity.class);
-        startActivity(I);
         progressDialog.dismiss();
-        finish();
+        AlertDialogMassage(GC.getPSRName());
+
     }
 
     public void AlertDialogMassage(String massage) {
 
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
         alertDialog.setTitle("DMS");
+
         alertDialog.setMessage(massage);
-        alertDialog.setCancelable(true);
+        alertDialog.setCancelable(false);
         alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
+                Intent I = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(I);
+                finish();
             }
         });
 

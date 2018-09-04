@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.odms.mahtab.dms.Adapter.ViewPagerAdapter;
 import com.odms.mahtab.dms.Database.LocalQuery.tbld_outlet_Local;
+import com.odms.mahtab.dms.Database.LocalQuery.temp_order_line;
 import com.odms.mahtab.dms.FragmentOrder.Fragment_OrderFirstStep;
 import com.odms.mahtab.dms.FragmentOrder.Fragment_OrderForthStep;
 import com.odms.mahtab.dms.FragmentOrder.Fragment_OrderSecondStep;
@@ -50,6 +51,8 @@ public class OrderActivity extends AppCompatActivity {
         homeBack.setVisibility(View.GONE);
 
          outletid=getIntent().getIntExtra("outletid", 0);
+        temp_order_line temp_order_line =new temp_order_line(getApplicationContext());
+        temp_order_line.DeleteAllOrderLine();
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());

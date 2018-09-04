@@ -69,10 +69,18 @@
 
 
     <style name="MyDialogTheme" parent="Theme.AppCompat.Dialog">
-        <item name="android:windowBackground">@color/bg_main</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowIsFloating">true</item>
-        <item name="android:windowCloseOnTouchOutside">false</item>
+        <item name="colorAccent">@color/white</item>
+        <item name="android:textColorPrimary">#000</item>
+        <item name="android:background">@color/btn_login</item>
+
     </style>
 
+    <style name="MyButtonStyle">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/btn_action_bar</item>
+        <item name="android:textColor">#000</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:typeface">serif</item>
+    </style>
 </resources>

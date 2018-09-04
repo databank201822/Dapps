@@ -39,11 +39,20 @@ public class tbld_Sku_Local {
         if (cursor.moveToFirst()) {
             do {
                 M_SKU sku = new M_SKU();
+
+                sku.setSKUId(Integer.parseInt(cursor.getString(1)));
                 sku.setSKUName(cursor.getString(2));
+                sku.setSKUlpc(Integer.parseInt(cursor.getString(3)));
+                sku.setBatch_id(Integer.parseInt(cursor.getString(4)));
+                sku.setPackSize(Integer.parseInt(cursor.getString(5)));
+                sku.setTP(Double.parseDouble(cursor.getString(6)));
+                sku.setMRP(Double.parseDouble(cursor.getString(7)));
+
+
                 // Adding contact to list
                 skuList.add(sku);
 
-                Log.e("sku", cursor.getString(1));
+
             } while (cursor.moveToNext());
         }
         db.close();

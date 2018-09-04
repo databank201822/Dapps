@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_root"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/action_bar"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/promoinfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="promoinfo"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dip">
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="120dp"
+                android:text="CS"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <EditText
+                android:id="@+id/orderCs"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext"
+                android:textStyle="bold"
+                android:hint="CS"
+                android:inputType="number"
+                android:maxLength="4">
+
+                <requestFocus />
+
+            </EditText>
+        </TableRow>
+
+        <TableRow
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dip">
+
+            <TextView
+
+                android:layout_width="120dp"
+                android:text="PCS"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <EditText
+                android:id="@+id/orderPs"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext"
+                android:hint="PCS"
+                android:textStyle="bold"
+                android:inputType="number"
+                android:maxLength="4">
+
+
+            </EditText>
+        </TableRow>
+
+        <TableRow
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dip">
+
+            <TextView
+
+                android:layout_width="120dp"
+
+                android:text="Total"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <EditText
+                android:id="@+id/totalprice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edittext"
+                android:hint="Total Price"
+                android:textStyle="bold"
+                android:inputType="none"/>
+        </TableRow>
+
+
+    </TableLayout>
+
+    <EditText
+        android:id="@+id/totalps"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:inputType="none"/>
+</LinearLayout>

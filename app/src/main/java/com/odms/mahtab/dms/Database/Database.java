@@ -7,8 +7,8 @@ import android.util.Log;
 
 public class Database extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 3;                     //DATABASE_VERSION
-    private static final String DATABASE_NAME = "DMS";  //DATABASE_NAME
+    private static final int DATABASE_VERSION = 2;                     //DATABASE_VERSION
+    private static final String DATABASE_NAME = "ODMS";  //DATABASE_NAME
     Context Contex;
 
     public Database(Context context) {
@@ -31,6 +31,10 @@ public class Database extends SQLiteOpenHelper {
         String tbld_sku = "CREATE TABLE tbld_sku (id INTEGER PRIMARY KEY ,SKUId INTEGER,SKUName Text,SKUlpc INTEGER,batch_id INTEGER,PackSize INTEGER,TP REAL,MRP REAL)";
         Log.e("tbld_sku", tbld_sku);
         db.execSQL(tbld_sku);
+
+        String temp_order_line = "CREATE TABLE temp_order_line (id INTEGER PRIMARY KEY ,SKUId INTEGER,SKUName Text,linetype INTEGER,SKUlpc INTEGER,batch_id INTEGER,PackSize INTEGER,TP REAL,MRP REAL,int qty)";
+        Log.e("temp_order_line", temp_order_line);
+        db.execSQL(temp_order_line);
     }
 
     @Override
@@ -38,6 +42,7 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS tbld_outlet");
         db.execSQL("DROP TABLE IF EXISTS tbld_subroute");
         db.execSQL("DROP TABLE IF EXISTS tbld_sku");
+        db.execSQL("DROP TABLE IF EXISTS temp_order_line");
         onCreate(db);
     }
 
