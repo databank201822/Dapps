@@ -7,7 +7,7 @@ import android.util.Log;
 
 public class Database extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 2;                     //DATABASE_VERSION
+    private static final int DATABASE_VERSION = 1;                     //DATABASE_VERSION
     private static final String DATABASE_NAME = "ODMS";  //DATABASE_NAME
     Context Contex;
 
@@ -32,7 +32,7 @@ public class Database extends SQLiteOpenHelper {
         Log.e("tbld_sku", tbld_sku);
         db.execSQL(tbld_sku);
 
-        String temp_order_line = "CREATE TABLE temp_order_line (id INTEGER PRIMARY KEY ,SKUId INTEGER,SKUName Text,linetype INTEGER,SKUlpc INTEGER,batch_id INTEGER,PackSize INTEGER,TP REAL,MRP REAL,int qty)";
+        String temp_order_line = "CREATE TABLE temp_order_line (id INTEGER PRIMARY KEY ,SKUId INTEGER,SKUName Text,linetype INTEGER,SKUlpc INTEGER,batch_id INTEGER,PackSize INTEGER,TP REAL,MRP REAL,qty INTEGER)";
         Log.e("temp_order_line", temp_order_line);
         db.execSQL(temp_order_line);
     }

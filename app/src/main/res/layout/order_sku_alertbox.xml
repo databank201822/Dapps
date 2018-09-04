@@ -39,7 +39,6 @@
                 android:hint="CS"
                 android:inputType="number"
                 android:maxLength="4">
-
                 <requestFocus />
 
             </EditText>
@@ -92,15 +91,17 @@
                 android:hint="Total Price"
                 android:textStyle="bold"
                 android:inputType="none"/>
+            <EditText
+            android:id="@+id/totalps"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+
+            android:inputType="none"/>
         </TableRow>
 
 
     </TableLayout>
 
-    <EditText
-        android:id="@+id/totalps"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
 
-        android:inputType="none"/>
 </LinearLayout>

@@ -42,7 +42,6 @@ public class OrderSkuListAdapter extends ArrayAdapter<M_SKU> {
         this.context = Context;
         this.resource = resource;
         this.SKUList = skuList;
-
         this.arraylist = new ArrayList<M_SKU>();
         this.arraylist.addAll(SKUList);
     }
@@ -85,7 +84,12 @@ public class OrderSkuListAdapter extends ArrayAdapter<M_SKU> {
 
         tvSkuname.setText(sku.getSKUName());
         tvPrice.setText(String.valueOf(Math.round(sku.getTP()*sku.getPackSize()))+" Tk");
-        tvPromo.setText(String.valueOf(""));
+        tvPromo.setText(String.valueOf(sku.getOrderflag()));
+        if (Integer.parseInt(String.valueOf(sku.getOrderflag()))==1){
+
+            ListItemLayout.setBackgroundColor(Color.parseColor("#34a853"));
+        }
+
 
        //Use for change color on order status
        // ListItemLayout.setBackgroundColor(Color.parseColor("#34a853"));

@@ -1,7 +1,7 @@
 package com.odms.mahtab.dms.Model;
 
 public class M_SKU {
-    int id, SKUId, SKUlpc, batch_id, PackSize, Promo_id;
+    int id, SKUId, SKUlpc, batch_id, PackSize, Promo_id,Orderflag;
     double TP, MRP;
     String SKUName, Promo_name;
 
@@ -30,18 +30,34 @@ public class M_SKU {
         this.SKUName = SKUName;
         this.Promo_name = promo_name;
     }
+    public M_SKU(int SKUId,String SKUName, int SKUlpc, int batch_id, int packSize, double TP, double MRP,int Orderflag ) {
+        this.SKUId = SKUId;
+        this.SKUlpc = SKUlpc;
+        this.batch_id = batch_id;
+        PackSize = packSize;
+        this.TP = TP;
+        this.MRP = MRP;
+        this.SKUName = SKUName;
+        this.Orderflag = Orderflag;
+    }
+
     public M_SKU(int SKUId,String SKUName, int SKUlpc, int batch_id, int packSize, double TP, double MRP ) {
         this.SKUId = SKUId;
         this.SKUlpc = SKUlpc;
         this.batch_id = batch_id;
         PackSize = packSize;
-
         this.TP = TP;
         this.MRP = MRP;
         this.SKUName = SKUName;
-
+        this.Orderflag = Orderflag;
+    }
+    public int getOrderflag() {
+        return Orderflag;
     }
 
+    public void setOrderflag(int orderflag) {
+        Orderflag = orderflag;
+    }
 
     public int getId() {
         return id;

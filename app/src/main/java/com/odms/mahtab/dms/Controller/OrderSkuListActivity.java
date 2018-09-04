@@ -10,6 +10,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -103,12 +104,12 @@ public class OrderSkuListActivity extends AppCompatActivity {
 
         skuArrayList = new ArrayList<>();
         tbld_Sku_Local sku_local = new tbld_Sku_Local(getApplicationContext());
-
+        temp_order_line a=new temp_order_line(getApplicationContext());
         List<M_SKU> Conts = sku_local.getAllSkulist();
 
         for (M_SKU Cont : Conts) {
-            skuArrayList.add(new M_SKU(Cont.getId(), Cont.getSKUId(), Cont.getPackSize(), Cont.getTP(), Cont.getSKUName(), Cont.getPromo_name()));
-
+           int flag= a.alreadyOrder(Cont.getSKUId());
+            skuArrayList.add(new M_SKU(Cont.getSKUId(),Cont.getSKUName(),Cont.getSKUlpc(),Cont.getBatch_id(),Cont.getPackSize(),Cont.getTP(),Cont.getMRP(),flag));
         }
 
         adapter = new OrderSkuListAdapter(this, R.layout.order_sku_listview_row, skuArrayList);
@@ -118,9 +119,7 @@ public class OrderSkuListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 M_SKU data = skuArrayList.get(position);
-
-                showInputDialog(data.getSKUName(), data.getSKUId(),data.getBatch_id(), data.getSKUlpc(),data.getPackSize(), data.getTP(),data.getMRP());
-
+                showInputDialog(data,position);
 
             }
         });
@@ -128,17 +127,27 @@ public class OrderSkuListActivity extends AppCompatActivity {
     }
 
 
-    protected void showInputDialog(final String Skuname, int skuid, final int batch_id, final int lpsc, final int packsize, final double tp,final double MRP) {
-        final int Skuid = skuid;
-        final int Packsize = packsize;
-        final double PSprice = tp;
+    protected void showInputDialog(M_SKU data, final int position) {
+
+        temp_order_line a=new temp_order_line(getApplicationContext());
+
+if (a.alreadyOrder(data.getSKUId())==0){
+        final int Skuid = data.getSKUId();
+        final int Packsize = data.getPackSize();
+        final double PSprice = data.getTP();
+        final String Skuname=data.getSKUName();
+        final int batch_id=data.getBatch_id();
+        final int  lpsc=data.getSKUlpc();
+        final int packsize=data.getPackSize();
+        final double MRP=data.getMRP();
+
         // get prompts.xml view
         LayoutInflater layoutInflater = LayoutInflater.from(OrderSkuListActivity.this);
         View promptView = layoutInflater.inflate(R.layout.order_sku_alertbox, null);
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(OrderSkuListActivity.this);
 
-        alertDialogBuilder.setTitle(Skuname);
+        alertDialogBuilder.setTitle(data.getSKUName());
         alertDialogBuilder.setView(promptView);
 
         final TextView promo = (TextView) promptView.findViewById(R.id.promoinfo);
@@ -213,21 +222,41 @@ public class OrderSkuListActivity extends AppCompatActivity {
         alertDialogBuilder.setCancelable(false)
                 .setPositiveButton("Add", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        M_temp_order_line line=new M_temp_order_line();
 
-                        line.setSKUId(Skuid);
-                        line.setSKUName(Skuname);
-                        line.setBatch_id(batch_id);
-                        line.setSKUlpc(lpsc);
-                        line.setLinetype(1);
-                        line.setPackSize(packsize);
-                        line.setTP(tp);
-                        line.setMRP(MRP);
+                        int Totalps=0;
+                        if (!Tps.getText().toString().trim().equals("")) {
 
-                        order_line.insertOrderLine(line);
-                        Toast.makeText(getApplicationContext(), "SKU: " + Skuid, Toast.LENGTH_SHORT).show();
+                            Totalps = Integer.parseInt(String.valueOf(Tps.getText()));
+                        }
+
+                        if (Totalps != 0) {
+
+                            M_temp_order_line line = new M_temp_order_line();
 
 
+                            line.setSKUId(Skuid);
+                            line.setSKUName(Skuname);
+                            line.setBatch_id(batch_id);
+                            line.setSKUlpc(lpsc);
+                            line.setLinetype(1);
+                            line.setPackSize(packsize);
+                            line.setTP(PSprice);
+                            line.setMRP(MRP);
+                            line.setQty(Totalps);
+
+                            order_line.insertOrderLine(line);
+                            Toast.makeText(getApplicationContext(), Skuname+" Added" , Toast.LENGTH_SHORT).show();
+                            skuArrayList.clear();
+                            ListViewShow();
+                            String text = inputSearch.getText().toString().toLowerCase(Locale.getDefault());
+                            adapter.filter(text);
+                            listView.setSelection(position);
+
+                        }else
+                        {
+                            AlertDialogMassage("Order Can't Allow 0");
+
+                        }
 
                     }
                 })
@@ -244,6 +273,10 @@ public class OrderSkuListActivity extends AppCompatActivity {
 
 
     }
+    else{
+    AlertDialogMassage("Sku Already added");
+    }
+    }
 
     private double grandtotal(int totalCs, int pcs, int Packsize, double PSprice) {
         int totalpcs = (totalCs * Packsize) + pcs;
@@ -251,8 +284,23 @@ public class OrderSkuListActivity extends AppCompatActivity {
         return totalPrice;
     }
 
-    void addLine(){
+    public void AlertDialogMassage(String massage) {
 
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setTitle("DMS");
+
+        alertDialog.setMessage(massage);
+        alertDialog.setCancelable(false);
+        alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
+
+            }
+        });
+
+        alertDialog.show();
     }
+
 
 }
