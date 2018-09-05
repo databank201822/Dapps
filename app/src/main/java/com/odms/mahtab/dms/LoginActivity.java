@@ -144,7 +144,7 @@ if(user.getText()!=null ||pass.getText()!=null) {
                 public void onErrorResponse(VolleyError error) {
                     Log.e("AllError", error.toString());
                     progressDialog.dismiss();
-                    AlertDialogMassage("No Internet Connection");
+                    ErrorAlertDialogMassage("No Internet Connection");
                 }
             }) {
                 //adding parameters to the request
@@ -170,7 +170,7 @@ if(user.getText()!=null ||pass.getText()!=null) {
         if(data== null || data.isEmpty()) {
             progressDialog.dismiss();
             Log.e("NODATA", data);
-            AlertDialogMassage("Please Enter Valid User & Password");
+            ErrorAlertDialogMassage("Please Enter Valid User & Password");
         } else {
             try {
                 Log.e("DATA", data);
@@ -192,9 +192,10 @@ if(user.getText()!=null ||pass.getText()!=null) {
 
 
 
- //String msg="PSRID : "+GC.getPSRid()+"\n PSRNAME : "+GC.getPSRName()+"\n DBId :"+GC.getDBId();
-             //   Toast.makeText(LoginActivity.this, msg, Toast.LENGTH_SHORT).show();
-               redirecttoHomepage();
+
+                ServerDataSync ServerDataSync =new ServerDataSync(getApplicationContext()); //Sync process start
+                progressDialog.dismiss();
+                AlertDialogMassage(GC.getPSRName());
 
             } catch (Exception e) {
                 Log.e("Error", e.getMessage());
@@ -205,12 +206,6 @@ if(user.getText()!=null ||pass.getText()!=null) {
 
 
 
-    public void redirecttoHomepage() {
-        ServerDataSync ServerDataSync =new ServerDataSync(getApplicationContext());
-        progressDialog.dismiss();
-        AlertDialogMassage(GC.getPSRName());
-
-    }
 
     public void AlertDialogMassage(String massage) {
 
@@ -231,7 +226,22 @@ if(user.getText()!=null ||pass.getText()!=null) {
 
         alertDialog.show();
     }
+    public void ErrorAlertDialogMassage(String massage) {
 
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setTitle("DMS");
+
+        alertDialog.setMessage(massage);
+        alertDialog.setCancelable(false);
+        alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+
+        alertDialog.show();
+    }
     @Override
     public void onBackPressed() {
     }

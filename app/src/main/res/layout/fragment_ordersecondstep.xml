@@ -10,6 +10,7 @@
         <RelativeLayout
             android:id="@+id/relativeLayout1"
             android:layout_width="fill_parent"
+            android:paddingTop="20dp"
             android:layout_height="wrap_content">
 
 
@@ -19,7 +20,7 @@
                 android:layout_height="40dp"
                 android:layout_alignParentRight="true"
                 android:layout_margin="5dp"
-                android:background="@drawable/btn_action_bar"
+                android:background="@drawable/btn_home"
                 android:text="+ Add SKU"
                 android:textColor="#8B0000"
                 android:textSize="14dp"

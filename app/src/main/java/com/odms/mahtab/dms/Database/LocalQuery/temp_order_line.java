@@ -92,5 +92,42 @@ public class temp_order_line {
 
     }
 
+    public M_temp_order_line getorderitem(int skuid) {
+
+
+
+        String selectQuery = "select SKUId,SKUName,PackSize,TP,MRP,qty from temp_order_line where linetype=1 and SKUId="+skuid;
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        M_temp_order_line skuline = new M_temp_order_line();
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+
+                skuline.setSKUId(Integer.parseInt(cursor.getString(0)));
+                skuline.setSKUName(cursor.getString(1));
+                skuline.setPackSize(Integer.parseInt(cursor.getString(2)));
+                skuline.setTP(Double.parseDouble(cursor.getString(3)));
+                skuline.setMRP(Double.parseDouble(cursor.getString(4)));
+                skuline.setQty(Integer.parseInt(cursor.getString(5)));
+
+                // Adding contact to list
+
+                Log.e("order line ", "SKU: " +cursor.getString(1));
+            } while (cursor.moveToNext());
+        }
+        db.close();
+        return skuline;
+
+    }
+
+
+    public void updateorderLine(int skuid,int qty) {
+
+      String strSQL = "UPDATE temp_order_line SET qty = "+qty+" WHERE SKUId = " + skuid;
+      db.execSQL(strSQL);
+
+      Log.e("temp_order_line", skuid+"Data-"+qty);
+    }
 
 }

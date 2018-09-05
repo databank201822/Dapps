@@ -6,12 +6,15 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
@@ -22,11 +25,13 @@ import android.widget.Toast;
 import com.odms.mahtab.dms.Controller.OrderSkuListActivity;
 
 import com.odms.mahtab.dms.Database.LocalQuery.temp_order_line;
+import com.odms.mahtab.dms.Model.M_SKU;
 import com.odms.mahtab.dms.Model.M_temp_order_line;
 import com.odms.mahtab.dms.R;
 
 import java.text.DecimalFormat;
 import java.util.List;
+import java.util.Locale;
 
 import static android.view.ViewGroup.*;
 import static android.view.ViewGroup.LayoutParams.*;
@@ -155,11 +160,9 @@ public class Fragment_OrderSecondStep extends Fragment {
         tvFree.setBackgroundResource(R.drawable.table_cell_bg);
         tvFree.setGravity(Gravity.CENTER);
 
-        tbValue.setText("Value");
+        tbValue.setText("Amount");
         tbValue.setBackgroundResource(R.drawable.table_cell_bg);
         tbValue.setGravity(Gravity.CENTER);
-
-
 
 
         row.addView(tvSKUName);
@@ -174,7 +177,7 @@ public class Fragment_OrderSecondStep extends Fragment {
     }
 
     void tablebody(final M_temp_order_line data) {
-        final String getSKUName=data.getSKUName();
+        final String getSKUName = data.getSKUName();
         int CS = data.getQty() / data.getPackSize();
         int ps = data.getQty() % data.getPackSize();
 
@@ -227,20 +230,24 @@ public class Fragment_OrderSecondStep extends Fragment {
             public void onClick(View arg0) {
 
 
-                AlertDialogMassage(data.getSKUId(),"Do you Remove SKU : "+ data.getSKUName());
+                DeleteAlertDialogMassage(data.getSKUId(), "Do you Remove SKU : " + data.getSKUName());
 
 
-            }});
+            }
+        });
         btnEdit.setBackgroundResource(R.drawable.edit);
 
         btnEdit.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View arg0) {
-                AlertDialogMassage(data.getSKUId(),"Do you Edit SKU : "+ data.getSKUName());
 
+                temp_order_line line = new temp_order_line(getActivity());
+                M_temp_order_line skuline = line.getorderitem(data.getSKUId());
+                showInputDialog(skuline);
 
-            }});
+            }
+        });
 
         row.addView(tvSKUName);
         row.addView(tvCS);
@@ -260,8 +267,8 @@ public class Fragment_OrderSecondStep extends Fragment {
         TableRow row = new TableRow(getActivity());
 
         TextView tvSKUName = new TextView(getActivity());
-        TextView tbValue = new TextView(getActivity());
-        TextView tbblank = new TextView(getActivity());
+        TextView tvValue = new TextView(getActivity());
+        TextView tvblank = new TextView(getActivity());
 
         row.setBackgroundResource(R.drawable.table_header_row_bg);
 
@@ -270,18 +277,19 @@ public class Fragment_OrderSecondStep extends Fragment {
         tvSKUName.setGravity(Gravity.RIGHT);
 
 
-        tbValue.setText(value);
-        tbValue.setBackgroundResource(R.drawable.table_cell_bg);
-        tbValue.setGravity(Gravity.RIGHT);
-        tbValue.setTypeface(tbValue.getTypeface(), Typeface.BOLD);
+        tvValue.setText(value);
+        tvValue.setBackgroundResource(R.drawable.table_cell_bg);
+        tvValue.setGravity(Gravity.RIGHT);
+        tvValue.setTypeface(tvValue.getTypeface(), Typeface.BOLD);
 
-        tbblank.setBackgroundResource(R.drawable.table_cell_bg);
+        tvblank.setBackgroundResource(R.drawable.table_cell_bg);
 
         TableRow.LayoutParams params = new TableRow.LayoutParams();
         params.span = 4;
 
         row.addView(tvSKUName, 0, params);
-        row.addView(tbblank);
+        row.addView(tvValue);
+
 
 
         tl.addView(row);
@@ -289,7 +297,139 @@ public class Fragment_OrderSecondStep extends Fragment {
 
     }
 
-    public void AlertDialogMassage(final int skuid, String massage) {
+    protected void showInputDialog(final M_temp_order_line data) {
+
+
+        final int Skuid = data.getSKUId();
+        final int Packsize = data.getPackSize();
+        final double PSprice = data.getTP();
+        final String SKUname = data.getSKUName();
+        final int totalps = data.getQty();
+
+        // get prompts.xml view
+        LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
+        View promptView = layoutInflater.inflate(R.layout.order_sku_alertbox, null);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+
+        alertDialogBuilder.setTitle(data.getSKUName());
+        alertDialogBuilder.setView(promptView);
+
+        final TextView promo = (TextView) promptView.findViewById(R.id.promoinfo);
+        final EditText orderCs = (EditText) promptView.findViewById(R.id.orderCs);
+        final EditText orderps = (EditText) promptView.findViewById(R.id.orderPs);
+        final EditText Total = (EditText) promptView.findViewById(R.id.totalprice);
+        final EditText Tps = (EditText) promptView.findViewById(R.id.totalps);
+
+        Total.setEnabled(false);
+
+        promo.setText("");
+
+        int cs = totalps / Packsize;
+        int ps = totalps % Packsize;
+        double TotalAmount = grandtotal(cs, ps, Packsize, PSprice);
+        orderCs.setText(String.valueOf(cs));
+        orderps.setText(String.valueOf(ps));
+        Tps.setText(String.valueOf(totalps));
+        Total.setText(Double.toString(TotalAmount));
+
+        orderCs.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                int totalCs = 0;
+                int pcs = 0;
+
+                if (!orderCs.getText().toString().trim().equals("")) {
+                    totalCs = Integer.parseInt(String.valueOf(orderCs.getText()));
+                }
+
+                if (!orderps.getText().toString().trim().equals("")) {
+                    pcs = Integer.parseInt(String.valueOf(orderps.getText()));
+                }
+
+                   double TotalAmount = grandtotal(totalCs, pcs, Packsize, PSprice);
+
+                  Total.setText(Double.toString(TotalAmount));
+
+                Tps.setText(Integer.toString((totalCs * Packsize) + pcs));
+            }
+        });
+
+        orderps.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                int totalCs = 0;
+                int pcs = 0;
+
+                if (!orderCs.getText().toString().trim().equals("")) {
+
+                    totalCs = Integer.parseInt(String.valueOf(orderCs.getText()));
+                }
+
+                if (!orderps.getText().toString().trim().equals("")) {
+                    pcs = Integer.parseInt(String.valueOf(orderps.getText()));
+                }
+
+                //     double TotalAmount = grandtotal(totalCs, pcs, Packsize, PSprice);
+
+                //   Total.setText(Double.toString(TotalAmount));
+                Tps.setText(Integer.toString((totalCs * Packsize) + pcs));
+            }
+        });
+
+
+        // setup a dialog window
+        alertDialogBuilder.setCancelable(false)
+                .setPositiveButton("Change", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                        int Totalps = 0;
+                        if (!Tps.getText().toString().trim().equals("")) {
+                            Totalps = Integer.parseInt(String.valueOf(Tps.getText()));
+                        }
+
+                        if (Totalps != 0) {
+
+                            temp_order_line order_line=new temp_order_line(getActivity());
+                            order_line.updateorderLine(Skuid,Totalps);
+                            Orderlist();
+                            Toast.makeText(getActivity(), Skuid+" Updated="+Totalps , Toast.LENGTH_SHORT).show();
+
+                        } else {
+                            ErrorAlertDialogMassage("Order Can't Allow 0");
+
+                        }
+
+                    }
+                })
+                .setNegativeButton("Back",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+        // create an alert dialog
+        AlertDialog alert = alertDialogBuilder.create();
+        alert.show();
+
+
+    }
+
+    public void DeleteAlertDialogMassage(final int skuid, String massage) {
 
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
         alertDialog.setTitle("DMS");
@@ -297,22 +437,48 @@ public class Fragment_OrderSecondStep extends Fragment {
         alertDialog.setMessage(massage);
         alertDialog.setCancelable(false)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
 
-                temp_order_line temp_order_line = new temp_order_line(getActivity());
-                temp_order_line.DeleteOrderLine(skuid);
-                Orderlist();
-                Toast.makeText(getActivity(), "removed " , Toast.LENGTH_SHORT).show();
-            }
-        }).setNegativeButton("Cancel",
+                        temp_order_line temp_order_line = new temp_order_line(getActivity());
+                        temp_order_line.DeleteOrderLine(skuid);
+                        Orderlist();
+                        Toast.makeText(getActivity(), "removed ", Toast.LENGTH_SHORT).show();
+                    }
+                }).setNegativeButton("Cancel",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
                     }
-                });;
+                });
+        ;
 
 
         alertDialog.show();
+    }
+
+    public void ErrorAlertDialogMassage(String massage) {
+
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+        alertDialog.setTitle("DMS");
+
+        alertDialog.setMessage(massage);
+        alertDialog.setCancelable(false)
+                .setNegativeButton("OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+        ;
+
+
+        alertDialog.show();
+    }
+
+    private double grandtotal(int totalCs, int pcs, int Packsize, double PSprice) {
+        int totalpcs = (totalCs * Packsize) + pcs;
+        double totalPrice = Math.round(totalpcs * PSprice);
+        return totalPrice;
     }
 }
